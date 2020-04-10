@@ -30,14 +30,16 @@ class QueryResult
     shared_ptr<vector<string>> _file; //整个文件
 public:
     QueryResult(const string &, shared_ptr<set<line_no>>, shared_ptr<vector<string>>);
-    friend ostream &print(ostream &, const QueryResult&);
+    shared_ptr<set<line_no>> getLines() const { return _lines; }
+    shared_ptr<vector<string>> getFile() const { return _file; }
+    friend ostream &print(ostream &, const QueryResult &);
 };
 
-ostream &print(ostream &os, const QueryResult& qr)
+ostream &print(ostream &os, const QueryResult &qr)
 {
     os << qr._sought << " occurs " << qr._lines->size() << " times " << endl;
-    for (auto& e: *qr._lines)
-        cout << "(line " << e+1 << ") " << qr._file->at(e) << endl;
+    for (auto &e : *qr._lines)
+        cout << "(line " << e + 1 << ") " << qr._file->at(e) << endl;
     cout << endl;
     return os;
 }

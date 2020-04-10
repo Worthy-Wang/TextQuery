@@ -1,9 +1,4 @@
-class WordQuery:public Query_base
+inline Query operator&(const Query &lhs, const Query &rhs)
 {
-    string query_word;
-
-private:
-    WordQuery(const string &str) : query_word(str) {}
-    QueryResult eval(const TextQuery& tq) { return tq.query(query_word); }
-
-};
+    return Query(shared_ptr<Query_base>(new AndQuery(lhs, rhs)));
+}

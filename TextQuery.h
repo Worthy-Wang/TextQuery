@@ -13,14 +13,13 @@ class TextQuery
 
 public:
     TextQuery(ifstream &ifs);
-    QueryResult query(const string&) const ;
-    // shared_ptr<vector<string>> getFile() { return _file;}
-    // shared_ptr<set<line_no>> getLineSet(const string& word) { return _wm.at(word); }
+    QueryResult query(const string &) const;
 };
+static shared_ptr<set<line_no>> noLine(new set<line_no>);
 
-QueryResult TextQuery::query(const string& sought) const 
+
+QueryResult TextQuery::query(const string &sought) const
 {
-    static shared_ptr<set<line_no>> noLine(new set<line_no>);
     auto it = _wm.find(sought);
     if (it != _wm.end())
         return QueryResult(sought, it->second, _file);
@@ -41,7 +40,7 @@ TextQuery::TextQuery(ifstream &ifs) : _file(new vector<string>)
         //分解每一行中的每一个单词
         while (iss >> word)
         {
-            shared_ptr<set<line_no>>& it = _wm[word];
+            shared_ptr<set<line_no>> &it = _wm[word];
             if (!it.get())
                 it.reset(new set<line_no>);
             it->insert(lineNumber);
